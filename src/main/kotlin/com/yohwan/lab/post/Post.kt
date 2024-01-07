@@ -5,6 +5,7 @@ import jakarta.persistence.Entity
 
 @Entity
 class Post (
-    val name: String,
-    val content: String
+    val title: String,
+    val content: String,
+    val subTitle: String
 ) : BaseEntity()
