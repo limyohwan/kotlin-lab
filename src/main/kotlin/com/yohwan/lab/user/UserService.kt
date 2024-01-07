@@ -3,8 +3,10 @@ package com.yohwan.lab.user
 import kotlinx.coroutines.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.lang.IllegalArgumentException
 
 @Service
 class UserService(
@@ -17,6 +19,15 @@ class UserService(
     fun getUsers(): MutableList<User> = userRepository.findAll()
 
     fun getUser(name: String): User = runBlocking { async { userReader.getAsyncUser(name) }.await() }
+
+//    @Transactional(readOnly = true)
+//    fun getUser(name: String): User {
+//        val user = userReader.getUser(name)
+//        Thread.sleep(500L)
+//        userReader.getUser(name)
+//        Thread.sleep(500L)
+//        return userRepository.findByIdOrNull(user.id!!) ?: throw IllegalArgumentException()
+//    }
 
     @Transactional
     fun saveUser(name: String, phone: String) = userRepository.save(User(name, phone))
