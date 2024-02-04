@@ -26,13 +26,14 @@ class PostService(
 
     @Transactional
     fun savePost(): Post {
-        val savedPost = postRepository.save(Post("첫글", "첫글입니다", "잡담"))
+        val savedPost = postRepository.save(Post("첫글", "첫글입니다11", "잡담"))
 //        publisher.publishEvent(PostSaveEvent(savedPost.id!!, savedPost.title, savedPost.content, savedPost.subTitle))
-        try {
-            publisher.publishEvent(PostSaveEvent(savedPost))
-        } catch (e : RuntimeException) {
-            println("에러발생")
-        }
+//        try {
+//            publisher.publishEvent(PostSaveEvent(savedPost))
+//        } catch (e : RuntimeException) {
+//            println("에러발생")
+//        }
+        publisher.publishEvent(PostSaveEvent(savedPost))
         return savedPost
     }
 }

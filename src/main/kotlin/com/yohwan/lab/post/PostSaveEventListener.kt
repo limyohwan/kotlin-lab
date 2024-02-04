@@ -7,6 +7,8 @@ import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.transaction.event.TransactionPhase
+import org.springframework.transaction.event.TransactionalEventListener
 import org.springframework.transaction.support.TransactionSynchronizationManager
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.log
@@ -17,22 +19,22 @@ class PostSaveEventListener(
 ) {
     private val logger: Logger = LoggerFactory.getLogger(PostSaveEventListener::class.java)
 
-    @EventListener
+//    @EventListener
 //    @Transactional(propagation = Propagation.REQUIRES_NEW)
-//    @TransactionalEventListener
+    @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
 //    @Async
     fun listen(event: PostSaveEvent) {
         // send mail
-        Thread.sleep(2000)
-        val foundPost = postRepository.findById(event.post.id!!).getOrNull() ?: throw RuntimeException()
+//        Thread.sleep(2000)
+//        val foundPost = postRepository.findById(event.post.id!!).getOrNull() ?: throw RuntimeException()
         logger.info("Transaction name : {}", TransactionSynchronizationManager.getCurrentTransactionName())
         logger.info("send mail")
-        foundPost.apply {
+        event.post.apply {
             this.content = "수정된 본문"
         }
-        throw RuntimeException()
-//        logger.info(event.post.content)
-//        postRepository.save(event.post)
+//        throw RuntimeException()
+        logger.info(event.post.content)
+        postRepository.save(event.post)
     }
 }
 
