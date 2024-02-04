@@ -15,6 +15,15 @@ class PostService(
 
     fun listPosts(): MutableList<Post> = postRepository.findAll()
 
+//    @Transactional(readOnly = true)
+    fun getPost(postId: Long) {
+        postRepository.findById(postId)
+        postRepository.findById(postId)
+        postRepository.findById(postId)
+        postRepository.findById(postId)
+        postRepository.findById(postId)
+    }
+
     @Transactional
     fun savePost(): Post {
         val savedPost = postRepository.save(Post("첫글", "첫글입니다", "잡담"))
