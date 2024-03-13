@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class PostController(
-    private val postService: PostService
+    private val postService: PostService,
+    private val postFacade: PostFacade
 ) {
     @GetMapping("/posts")
     fun listPosts() = postService.listPosts()
@@ -16,5 +17,5 @@ class PostController(
     fun getPost(@PathVariable postId: Long) = postService.getPost(postId)
 
     @PostMapping("/posts")
-    fun savePost() = postService.savePost()
+    fun savePost() = postFacade.savePost()
 }

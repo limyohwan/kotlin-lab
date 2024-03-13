@@ -15,7 +15,7 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-        format_sql: true
+#        format_sql: true
         show_sql: true
   h2:
     console:
@@ -24,6 +24,13 @@ spring:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
+
+logging:
+  level:
+    org:
+      springframework:
+        transaction:
+          interceptor: trace
 
 ---
 spring.config.activate.on-profile: local-dev
