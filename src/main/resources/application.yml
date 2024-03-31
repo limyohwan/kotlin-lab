@@ -5,6 +5,8 @@ spring:
       ddl-auto: none
     properties:
       hibernate.default_batch_fetch_size: 100
+#  main:
+#    web-application-type: none
 
 ---
 spring.config.activate.on-profile: local
